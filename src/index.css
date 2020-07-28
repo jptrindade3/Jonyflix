@@ -23,3 +23,17 @@ body {
 a {
   color: inherit;
 }
+
+#root {
+  /* Essa notação no min-height Calcula quanto de altura é 
+  necessário, considerando o padding-top, pra que a página
+  fique no tamanho exato 
+  
+  Lembrando que a unidade vh pega o tamanho da tela atual e
+  usa esse valor pra fazer suas medidas
+  */
+
+  min-height: calc(100vh - var(--bodyPaddingTop)); 
+  display: flex;
+  flex-direction: column;
+}

@@ -33,19 +33,21 @@ export const ExtraLink = styled.a`
   }
 `;
 
-export const VideoCardList = styled.ul`
-  margin: 0;
-  padding-left: 0;
-  padding-bottom: 32px;
-  list-style: none;
-  display: flex;
-  overflow-x: auto;
-  flex-direction: row;
+// Foi substituido pelo Slider, pro Carousel funcionar
+
+// export const VideoCardList = styled.ul`
+//   margin: 0;
+//   padding-left: 0;
+//   padding-bottom: 32px;
+//   list-style: none;
+//   display: flex;
+//   overflow-x: auto;
+//   flex-direction: row;
   
-  li {
-    margin-right: 16px;
-  }
-`;
+//   li {
+//     margin-right: 16px;
+//   }
+// `;
 
 export const VideoCardGroupContainer = styled.section`
   color: white;
