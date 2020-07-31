@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 //Templates
 import PageDefault from '../../../Templates/PageDefault'
 import FormField from '../../../components/FormField';
+import Button from '../../../components/Button';
 
 function CadastroCategoria() {
     /* 
@@ -21,8 +22,8 @@ function CadastroCategoria() {
     */
 
     const defaultCategValues = {
-        name: ' ',
-        description: ' ',
+        name: '',
+        description: '',
         color: '#000',
     }
 
@@ -37,6 +38,7 @@ function CadastroCategoria() {
     Functions
     */
     function handleSubmit(e){
+        console.log('passou na handle submit');
         e.preventDefault();
         setRegCateg([
             ...registeredCategories, //notação pra pegar todos os itens atuais do vetor e os manter
@@ -47,6 +49,7 @@ function CadastroCategoria() {
     }
 
     function handleCategValues(key, eValue){
+        console.log('passou na handle categ values');
         setNewCateg({
             ...setNewCateg,
             [key]: eValue, //Esse [] faz com que o nome do campo seja dinâmico, ou seja, possa mudar de valor
@@ -54,6 +57,7 @@ function CadastroCategoria() {
     }
 
     function handleChange(e){
+        console.log('passou na handle change');
         handleCategValues(
             e.target.getAttribute("name"),
             e.target.value,
@@ -80,21 +84,9 @@ function CadastroCategoria() {
                         value={newCateg.description}
                         onChange={handleChange}
                         name="description"
-                        type="text"
+                        type="textarea"
                         label="Descrição"
                     />
-
-                    {/* <div>
-                        <label>
-                            Descrição:
-                            <textarea 
-                                type="text"
-                                value = {newCateg.description}
-                                name = "description"
-                                onChange ={handleChange}
-                            />
-                        </label>
-                    </div> */}
 
                     <FormField
                         value={newCateg.color}
@@ -104,9 +96,9 @@ function CadastroCategoria() {
                         label="Cor"
                     />
 
-                    <button>
+                    <Button>
                         Cadastrar
-                    </button>
+                    </Button>
                 </form>
 
                 <ul>
