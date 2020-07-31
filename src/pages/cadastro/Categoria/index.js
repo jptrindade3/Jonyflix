@@ -81,25 +81,16 @@ function CadastroCategoria() {
     */
     useEffect(() => {
 
-        const URL_TOP = 'http://localhost:3333/categorias';
-        fetch(URL_TOP);
-        // setTimeout(() => {
-        //     setRegCateg([
-        //         ...registeredCategories, //notação pra pegar todos os itens atuais do vetor e os manter
-        //         {
-        //             "id": 1,
-        //             "name": "Front End",
-        //             "description": "Uma categoria bacana",
-        //             "color": "#cbd1ff"
-        //         },
-        //         {
-        //             "id": 2,
-        //             "name": "Bakend End",
-        //             "description": "Uma categoria mais bacana ainda",
-        //             "color": "#cbd1ff"
-        //         },
-        //     ]);
-        // }, 4 * 1000);
+        const URL_TOP = window.location.hostname.includes('localhost') 
+        ? 'http://localhost:3333/categorias'
+        : 'https://jonyflix.herokuapp.com/categorias';
+        fetch(URL_TOP) //Faz uma requisição pro nosso server json
+        .then(async (serverResponse) => {//Pega a resposta do nosso server ao ser requisitado
+            const response = await serverResponse.json(); //Converte a resposta dada em texto para json
+            setRegCateg([
+                ...response,
+            ]);
+        });
     }, []);
 
     return(
