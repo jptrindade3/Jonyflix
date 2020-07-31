@@ -21,9 +21,9 @@ function CadastroCategoria() {
     */
 
     const defaultCategValues = {
-        name: ' ',
-        description: ' ',
-        color: '#000',
+        name: '',
+        description: '',
+        color: '#000000',
     }
 
     /*
@@ -83,18 +83,6 @@ function CadastroCategoria() {
                         type="text"
                         label="Descrição"
                     />
-
-                    {/* <div>
-                        <label>
-                            Descrição:
-                            <textarea 
-                                type="text"
-                                value = {newCateg.description}
-                                name = "description"
-                                onChange ={handleChange}
-                            />
-                        </label>
-                    </div> */}
 
                     <FormField
                         value={newCateg.color}
