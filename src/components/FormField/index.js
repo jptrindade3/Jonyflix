@@ -71,8 +71,7 @@ const Input = styled.input`
     retorne qualquer alteração no CSS que eu queira, e é isso
     que vamos utilizar pra garantir que a label não vai voltar
     ao tamanho normal após ter o campo preenchido. */
-    ${({ value }) => {
-    const hasValue = value.length > 0;
+    ${({ hasValue }) => {
         return hasValue && css`
             &:not([type='color']) + ${Label.Text} {
             transform: scale(.6) translateY(-10px);
@@ -85,6 +84,7 @@ function FormField({label, type, name, value, onChange}){
     const fieldId = `id_${name}`;
     const isTextarea = type === 'textarea';
     const tag = isTextarea ? 'textarea' : 'input';
+    const hasValue = Boolean(value.length); 
 
     return(
         <FormFieldWrapper>
@@ -97,6 +97,7 @@ function FormField({label, type, name, value, onChange}){
                     value = {value}
                     name = {name}
                     onChange ={onChange}
+                    hasValue = {hasValue}
                  />
                  {/* Para que essa próxima tag funcione, o span,
                  que tem o efeito dentro do input, é necessáro

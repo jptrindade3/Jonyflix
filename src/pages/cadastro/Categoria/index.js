@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 
 //Templates
 import PageDefault from '../../../Templates/PageDefault'
 import FormField from '../../../components/FormField';
-import Button from '../../../components/Button';
 
 function CadastroCategoria() {
     /* 
@@ -24,7 +23,7 @@ function CadastroCategoria() {
     const defaultCategValues = {
         name: '',
         description: '',
-        color: '#000',
+        color: '',
     }
 
     /*
@@ -38,7 +37,6 @@ function CadastroCategoria() {
     Functions
     */
     function handleSubmit(e){
-        console.log('passou na handle submit');
         e.preventDefault();
         setRegCateg([
             ...registeredCategories, //notação pra pegar todos os itens atuais do vetor e os manter
@@ -49,57 +47,105 @@ function CadastroCategoria() {
     }
 
     function handleCategValues(key, eValue){
-        console.log('passou na handle categ values');
         setNewCateg({
-            ...setNewCateg,
+            ...newCateg,
             [key]: eValue, //Esse [] faz com que o nome do campo seja dinâmico, ou seja, possa mudar de valor
         })
     }
 
     function handleChange(e){
-        console.log('passou na handle change');
         handleCategValues(
-            e.target.getAttribute("name"),
+            e.target.getAttribute('name'),
             e.target.value,
         );
     }
 
+    /*
+    O useEffect é um hook que nos permite executar uma função
+    assim que determinado efeito ocorrer na página. Temos um 
+    efeito "gatilho" que dispara o evento que nós queremos que
+    aconteça
+
+    Sendo assim, o useEffect precisa de 2 parâmetros: o primeiro
+    é o que nós queremos que aconteça, já o segundo é o que espera-
+    mos que aconteça para que o nosso evento seja desencadeado.
+
+    Quando queremos que o código rode somente quando inicializamos a
+    página, passamos como parâmetro um array vazio. Caso não coloquemos
+    nada nesse parâmetro, a nossa função será executada a cada alterção
+    que tivermos na página, o que pode não ser o ideal.
+
+    Para escutarmos outras mudanças na página que não só a de carrega-
+    mento, colocamos dentro do array vazio o que queremos ver mudar para
+    que nossa função seja executada
+    */
+    useEffect(() => {
+
+        const URL_TOP = 'http://localhost:3333/categorias';
+        fetch(URL_TOP);
+        // setTimeout(() => {
+        //     setRegCateg([
+        //         ...registeredCategories, //notação pra pegar todos os itens atuais do vetor e os manter
+        //         {
+        //             "id": 1,
+        //             "name": "Front End",
+        //             "description": "Uma categoria bacana",
+        //             "color": "#cbd1ff"
+        //         },
+        //         {
+        //             "id": 2,
+        //             "name": "Bakend End",
+        //             "description": "Uma categoria mais bacana ainda",
+        //             "color": "#cbd1ff"
+        //         },
+        //     ]);
+        // }, 4 * 1000);
+    }, []);
 
     return(
         <>
             <PageDefault>
-                <h1>Cadastro de Categoria:</h1>
+                <h1>Cadastro de Categoria:
+                    {newCateg.name}
+                </h1>
 
                 <form onSubmit={(e) => (handleSubmit(e))}>
 
                     <FormField
+                        label="Nome da Categoria"
+                        type="text"
+                        name="name"
                         value={newCateg.name}
                         onChange={handleChange}
-                        name="name"
-                        type="text"
-                        label="Nome da Categoria"
                     />
 
                     <FormField
-                        value={newCateg.description}
-                        onChange={handleChange}
-                        name="description"
-                        type="textarea"
                         label="Descrição"
+                        type="textarea"
+                        name="description"
+                        onChange={handleChange}
+                        value={newCateg.description}
                     />
 
                     <FormField
-                        value={newCateg.color}
-                        onChange={handleChange}
-                        name="color"
-                        type="color"
                         label="Cor"
+                        type="color"
+                        name="color"
+                        onChange={handleChange}
+                        value={newCateg.color}
                     />
 
-                    <Button>
+                    <button>
                         Cadastrar
-                    </Button>
+                    </button>
                 </form>
+
+                {registeredCategories.length === 0 && (
+                    <div>
+                        {/*Aqui fica o nosso loading do que vem do nosso backend */}
+                        Loading...
+                    </div>
+                )}
 
                 <ul>
                     {registeredCategories.map((registeredCategories, index) => {

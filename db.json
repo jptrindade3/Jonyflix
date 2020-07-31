@@ -1,0 +1,16 @@
+{
+    "categorias": [
+        {
+            "id": 1,
+            "name": "Front End",
+            "description": "Uma categoria bacana",
+            "color": "#cbd1ff"
+        },
+        {
+            "id": 2,
+            "name": "Bakend End",
+            "description": "Uma categoria mais bacana ainda",
+            "color": "#cbd1ff"
+        }
+    ]
+}
