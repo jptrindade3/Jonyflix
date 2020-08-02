@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
+import useForm from '../../../hooks/useForm';
+import Button from '../../../components/Button';
 
 //Templates
 import PageDefault from '../../../Templates/PageDefault'
@@ -21,43 +23,32 @@ function CadastroCategoria() {
     */
 
     const defaultCategValues = {
-        name: '',
-        description: '',
-        color: '',
+        titulo: '',
+        link_extra: {
+            text: '',
+            url: '',
+        },
+        cor: '',
     }
 
     /*
     States
     */
     const [registeredCategories, setRegCateg] = useState([]);
-    const [newCateg, setNewCateg] = useState(defaultCategValues);
-
-
-    /*
-    Functions
-    */
+    const {
+        handleChange, 
+        clearForm,
+        newValue, 
+    } = useForm(defaultCategValues);
+    
     function handleSubmit(e){
         e.preventDefault();
         setRegCateg([
             ...registeredCategories, //notação pra pegar todos os itens atuais do vetor e os manter
-            newCateg,
+            newValue,
         ]);
 
-        setNewCateg(defaultCategValues);//Reseta os campos depois de preenchidos e enviados
-    }
-
-    function handleCategValues(key, eValue){
-        setNewCateg({
-            ...newCateg,
-            [key]: eValue, //Esse [] faz com que o nome do campo seja dinâmico, ou seja, possa mudar de valor
-        })
-    }
-
-    function handleChange(e){
-        handleCategValues(
-            e.target.getAttribute('name'),
-            e.target.value,
-        );
+        clearForm();//Reseta os campos depois de preenchidos e enviados
     }
 
     /*
@@ -97,7 +88,7 @@ function CadastroCategoria() {
         <>
             <PageDefault>
                 <h1>Cadastro de Categoria:
-                    {newCateg.name}
+                    {newValue.titulo}
                 </h1>
 
                 <form onSubmit={(e) => (handleSubmit(e))}>
@@ -105,8 +96,8 @@ function CadastroCategoria() {
                     <FormField
                         label="Nome da Categoria"
                         type="text"
-                        name="name"
-                        value={newCateg.name}
+                        name="titulo"
+                        value={newValue.titulo}
                         onChange={handleChange}
                     />
 
@@ -115,20 +106,20 @@ function CadastroCategoria() {
                         type="textarea"
                         name="description"
                         onChange={handleChange}
-                        value={newCateg.description}
+                        value={newValue.link_extra.text}
                     />
 
                     <FormField
                         label="Cor"
                         type="color"
-                        name="color"
+                        name="cor"
                         onChange={handleChange}
-                        value={newCateg.color}
+                        value={newValue.cor}
                     />
 
-                    <button>
+                    <Button type="submit">
                         Cadastrar
-                    </button>
+                    </Button>
                 </form>
 
                 {registeredCategories.length === 0 && (
@@ -143,7 +134,7 @@ function CadastroCategoria() {
                         return(
                             // O ideal é que cada item da lista tenha um key única
                             <li key = {`${registeredCategories}${index}`}>
-                                {registeredCategories.name}
+                                {registeredCategories.titulo}
                             </li>
                         )
                     })}
